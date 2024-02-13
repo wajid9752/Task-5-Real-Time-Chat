@@ -1,0 +1,59 @@
+
+{% extends 'chat/base.html' %}
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="row justify-content-between mt-5">
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Your Rooms</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for room in rooms %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="room-name">{{ room.name | capfirst }}</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <a href="{% url 'chat-view' room.id %}" class="btn btn-sm btn-primary ml-2">Chat Now</a>
+                                <a href="{% url 'delete-room' room.id %}" class="btn btn-sm btn-danger mr-2"><i class="fa fa-trash"></i></a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+
+
+    <div class="col-md-6">
+        <h5>Search For Other Rooms</h5>
+        
+        <form action="" method="GET" accept="{url 'home' }">
+            <input type="text" name="query" class="form-control">
+            <input type="submit" class="btn btn-sm btn-success mt-2" value="search">
+        </form>
+
+        <div> 
+            {% if matched_rooms %}
+            <h5>Matched Room</h5>
+            <ul>    
+                {% for room in matched_rooms %}
+                    <li class="ml-2"> <a href="{% url 'chat-view' room.id %}" style="text-decoration: none;"> {{room.name | capfirst}}</a>   
+                    </li> 
+                {% endfor %}
+                </ul>
+            {% endif %}    
+            
+        </div>
+        
+    </div>
+
+</div>
+
+
+{% endblock %}
